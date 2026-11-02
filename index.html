@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA4 - Underwater Research Base - 242322</title>
+  <link rel="icon" href="data:,">
+
+  <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+  <script src="components.js"></script>
+</head>
+
+<body>
+  <a-scene
+    background="color: #062535"
+    fog="type: exponential; color: #062535; density: 0.025">
+
+    <!-- Camera rig: desktop movement and mouse look -->
+    <a-entity id="rig" position="0 0 0" wasd-controls>
+      <a-entity
+        id="camera"
+        camera
+        position="0 1.6 0"
+        look-controls
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .exhibit">
+      </a-entity>
+    </a-entity>
+
+    <!-- Underwater environment -->
+    <a-sky color="#07394b"></a-sky>
+
+    <a-plane
+      id="ground"
+      position="0 -0.05 0"
+      rotation="-90 0 0"
+      width="30"
+      height="30"
+      color="#426d72">
+    </a-plane>
+
+    <!-- Lighting -->
+    <a-entity
+      light="type: ambient; color: #9bd6e4; intensity: 0.65">
+    </a-entity>
+
+    <a-entity
+      light="type: directional; color: #d3f5ff; intensity: 1.1"
+      position="-3 8 4">
+    </a-entity>
+
+    <!-- Central research platform -->
+    <a-cylinder
+      position="0 0.08 0"
+      radius="1.3"
+      height="0.16"
+      color="#235768">
+    </a-cylinder>
+
+    <!-- Student ID and variant information -->
+    <a-entity position="0 2.4 -2.5">
+      <a-plane
+        width="3.8"
+        height="1.1"
+        color="#102d3b"
+        opacity="0.95">
+      </a-plane>
+
+      <a-text
+        value="PA4 - UNDERWATER RESEARCH BASE"
+        position="-1.75 0.27 0.02"
+        width="3.4"
+        color="#ffffff">
+      </a-text>
+
+      <a-text
+        value="Student ID: 242322"
+        position="-1.75 0 0.02"
+        width="3.2"
+        color="#a8e8f3">
+      </a-text>
+
+      <a-text
+        value="Pulse | Point-and-click | Ring"
+        position="-1.75 -0.27 0.02"
+        width="3.2"
+        color="#a8e8f3">
+      </a-text>
+    </a-entity>
+
+    <!-- First prototype exhibit -->
+    <a-entity
+      id="exhibit-1"
+      class="exhibit"
+      position="0 1.2 -4"
+      geometry="primitive: icosahedron; radius: 0.6"
+      material="color: #26d9e6; metalness: 0.25; roughness: 0.35">
+    </a-entity>
+
+    <a-cylinder
+      position="0 0.2 -4"
+      radius="0.8"
+      height="0.4"
+      color="#174b60">
+    </a-cylinder>
+
+  </a-scene>
+</body>
+</html>
