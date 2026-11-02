@@ -89,20 +89,98 @@
       </a-text>
     </a-entity>
 
-    <!-- First prototype exhibit -->
+    
+    <!-- Six exhibits arranged in a ring of radius 4 m -->
+    <!-- Ring center: (0, 0, 0) -->
+
+    <!-- 1. Ocean Core - front -->
     <a-entity
       id="exhibit-1"
       class="exhibit"
-      position="0 1.2 -4"
-      geometry="primitive: icosahedron; radius: 0.6"
-      material="color: #26d9e6; metalness: 0.25; roughness: 0.35">
+      data-name="Ocean Core"
+      data-description="Energy source for the underwater research base"
+      position="0 1.3 -4"
+      geometry="primitive: icosahedron; radius: 0.55"
+      material="color: #20e1e8; metalness: 0.25; roughness: 0.35">
     </a-entity>
 
-    <a-cylinder
-      position="0 0.2 -4"
-      radius="0.8"
-      height="0.4"
-      color="#174b60">
+    <a-cylinder position="0 0.2 -4"
+      radius="0.75" height="0.4" color="#174b60">
+    </a-cylinder>
+
+    <!-- 2. Deep-Sea Sensor -->
+    <a-entity
+      id="exhibit-2"
+      class="exhibit"
+      data-name="Deep-Sea Sensor"
+      data-description="Measures underwater pressure and temperature"
+      position="3.464 1.3 -2"
+      geometry="primitive: octahedron; radius: 0.55"
+      material="color: #ffbb55; metalness: 0.3; roughness: 0.4">
+    </a-entity>
+
+    <a-cylinder position="3.464 0.2 -2"
+      radius="0.75" height="0.4" color="#174b60">
+    </a-cylinder>
+
+    <!-- 3. Coral Sample -->
+    <a-entity
+      id="exhibit-3"
+      class="exhibit"
+      data-name="Coral Sample"
+      data-description="A specimen collected for marine biodiversity research"
+      position="3.464 1.3 2"
+      geometry="primitive: dodecahedron; radius: 0.55"
+      material="color: #ff6f91; metalness: 0.1; roughness: 0.65">
+    </a-entity>
+
+    <a-cylinder position="3.464 0.2 2"
+      radius="0.75" height="0.4" color="#174b60">
+    </a-cylinder>
+
+    <!-- 4. Research Drone -->
+    <a-entity
+      id="exhibit-4"
+      class="exhibit"
+      data-name="Research Drone"
+      data-description="An autonomous vehicle for seabed exploration"
+      position="0 1.3 4"
+      geometry="primitive: box; width: 0.9; height: 0.55; depth: 0.65"
+      material="color: #8faaff; metalness: 0.45; roughness: 0.3">
+    </a-entity>
+
+    <a-cylinder position="0 0.2 4"
+      radius="0.75" height="0.4" color="#174b60">
+    </a-cylinder>
+
+    <!-- 5. Water Analyzer -->
+    <a-entity
+      id="exhibit-5"
+      class="exhibit"
+      data-name="Water Analyzer"
+      data-description="Tests water quality and chemical composition"
+      position="-3.464 1.3 2"
+      geometry="primitive: cylinder; radius: 0.42; height: 0.9"
+      material="color: #9bea78; metalness: 0.25; roughness: 0.4">
+    </a-entity>
+
+    <a-cylinder position="-3.464 0.2 2"
+      radius="0.75" height="0.4" color="#174b60">
+    </a-cylinder>
+
+    <!-- 6. Sonar Beacon -->
+    <a-entity
+      id="exhibit-6"
+      class="exhibit"
+      data-name="Sonar Beacon"
+      data-description="Uses acoustic signals to map the ocean floor"
+      position="-3.464 1.3 -2"
+      geometry="primitive: cone; radiusBottom: 0.5; radiusTop: 0.1; height: 1"
+      material="color: #d4a1ff; metalness: 0.3; roughness: 0.45">
+    </a-entity>
+
+    <a-cylinder position="-3.464 0.2 -2"
+      radius="0.75" height="0.4" color="#174b60">
     </a-cylinder>
 
   </a-scene>
