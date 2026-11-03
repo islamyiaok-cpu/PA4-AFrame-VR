@@ -7,10 +7,7 @@
   <title>PA4 - Underwater Research Base - 242322</title>
   <link rel="icon" href="data:,">
 
-  <!-- Required A-Frame version -->
   <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
-
-  <!-- Our custom components -->
   <script src="components.js"></script>
 </head>
 
@@ -29,12 +26,24 @@
         cursor="rayOrigin: mouse"
         raycaster="objects: .exhibit">
       </a-entity>
+
+      <!-- VR controllers -->
+      <a-entity
+        id="left-hand"
+        laser-controls="hand: left"
+        raycaster="objects: .exhibit">
+      </a-entity>
+
+      <a-entity
+        id="right-hand"
+        laser-controls="hand: right"
+        raycaster="objects: .exhibit">
+      </a-entity>
     </a-entity>
 
     <!-- Underwater environment -->
     <a-sky color="#07394b"></a-sky>
 
-    <!-- Sea floor -->
     <a-plane
       id="ground"
       position="0 -0.05 0"
@@ -44,7 +53,7 @@
       color="#426d72">
     </a-plane>
 
-    <!-- Lighting -->
+    <!-- Lights -->
     <a-entity
       light="type: ambient; color: #9bd6e4; intensity: 0.65">
     </a-entity>
@@ -54,7 +63,7 @@
       position="-3 8 4">
     </a-entity>
 
-    <!-- Central research platform -->
+    <!-- Center platform -->
     <a-cylinder
       position="0 0.08 0"
       radius="1.3"
@@ -62,8 +71,8 @@
       color="#235768">
     </a-cylinder>
 
-    <!-- Student ID and variant information -->
-    <a-entity position="0 2.4 -2.5">
+    <!-- Information board -->
+    <a-entity position="0 3.5 -2.5">
       <a-plane
         width="3.8"
         height="1.1"
@@ -93,123 +102,83 @@
       </a-text>
     </a-entity>
 
-    <!-- ====================================== -->
-    <!-- SIX EXHIBITS - RING OF RADIUS 4 METERS -->
-    <!-- ====================================== -->
-
-    <!-- 1. Ocean Core -->
+    <!-- EXHIBIT 1 -->
     <a-entity
       id="exhibit-1"
       class="exhibit"
-      data-name="Ocean Core"
-      data-description="Energy source for the underwater research base"
       position="0 1.3 -4"
       geometry="primitive: icosahedron; radius: 0.55"
       material="color: #20e1e8; metalness: 0.25; roughness: 0.35"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 0">
+      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 0"
+      x2322-exhibit="name: Ocean Core; description: Energy source for the underwater research base">
     </a-entity>
+    <a-cylinder position="0 0.2 -4" radius="0.75"
+      height="0.4" color="#174b60"></a-cylinder>
 
-    <a-cylinder
-      position="0 0.2 -4"
-      radius="0.75"
-      height="0.4"
-      color="#174b60">
-    </a-cylinder>
-
-    <!-- 2. Deep-Sea Sensor -->
+    <!-- EXHIBIT 2 -->
     <a-entity
       id="exhibit-2"
       class="exhibit"
-      data-name="Deep-Sea Sensor"
-      data-description="Measures underwater pressure and temperature"
       position="3.464 1.3 -2"
       geometry="primitive: octahedron; radius: 0.55"
       material="color: #ffbb55; metalness: 0.3; roughness: 0.4"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 1.047">
+      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 1.047"
+      x2322-exhibit="name: Deep-Sea Sensor; description: Measures underwater pressure and temperature">
     </a-entity>
+    <a-cylinder position="3.464 0.2 -2" radius="0.75"
+      height="0.4" color="#174b60"></a-cylinder>
 
-    <a-cylinder
-      position="3.464 0.2 -2"
-      radius="0.75"
-      height="0.4"
-      color="#174b60">
-    </a-cylinder>
-
-    <!-- 3. Coral Sample -->
+    <!-- EXHIBIT 3 -->
     <a-entity
       id="exhibit-3"
       class="exhibit"
-      data-name="Coral Sample"
-      data-description="A specimen collected for marine biodiversity research"
       position="3.464 1.3 2"
       geometry="primitive: dodecahedron; radius: 0.55"
       material="color: #ff6f91; metalness: 0.1; roughness: 0.65"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 2.094">
+      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 2.094"
+      x2322-exhibit="name: Coral Sample; description: Marine biodiversity research specimen">
     </a-entity>
+    <a-cylinder position="3.464 0.2 2" radius="0.75"
+      height="0.4" color="#174b60"></a-cylinder>
 
-    <a-cylinder
-      position="3.464 0.2 2"
-      radius="0.75"
-      height="0.4"
-      color="#174b60">
-    </a-cylinder>
-
-    <!-- 4. Research Drone -->
+    <!-- EXHIBIT 4 -->
     <a-entity
       id="exhibit-4"
       class="exhibit"
-      data-name="Research Drone"
-      data-description="An autonomous vehicle for seabed exploration"
       position="0 1.3 4"
       geometry="primitive: box; width: 0.9; height: 0.55; depth: 0.65"
       material="color: #8faaff; metalness: 0.45; roughness: 0.3"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 3.142">
+      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 3.142"
+      x2322-exhibit="name: Research Drone; description: Autonomous vehicle for seabed exploration">
     </a-entity>
+    <a-cylinder position="0 0.2 4" radius="0.75"
+      height="0.4" color="#174b60"></a-cylinder>
 
-    <a-cylinder
-      position="0 0.2 4"
-      radius="0.75"
-      height="0.4"
-      color="#174b60">
-    </a-cylinder>
-
-    <!-- 5. Water Analyzer -->
+    <!-- EXHIBIT 5 -->
     <a-entity
       id="exhibit-5"
       class="exhibit"
-      data-name="Water Analyzer"
-      data-description="Tests water quality and chemical composition"
       position="-3.464 1.3 2"
       geometry="primitive: cylinder; radius: 0.42; height: 0.9"
       material="color: #9bea78; metalness: 0.25; roughness: 0.4"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 4.189">
+      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 4.189"
+      x2322-exhibit="name: Water Analyzer; description: Tests water quality and chemical composition">
     </a-entity>
+    <a-cylinder position="-3.464 0.2 2" radius="0.75"
+      height="0.4" color="#174b60"></a-cylinder>
 
-    <a-cylinder
-      position="-3.464 0.2 2"
-      radius="0.75"
-      height="0.4"
-      color="#174b60">
-    </a-cylinder>
-
-    <!-- 6. Sonar Beacon -->
+    <!-- EXHIBIT 6 -->
     <a-entity
       id="exhibit-6"
       class="exhibit"
-      data-name="Sonar Beacon"
-      data-description="Uses acoustic signals to map the ocean floor"
       position="-3.464 1.3 -2"
       geometry="primitive: cone; radiusBottom: 0.5; radiusTop: 0.1; height: 1"
       material="color: #d4a1ff; metalness: 0.3; roughness: 0.45"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 5.236">
+      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 5.236"
+      x2322-exhibit="name: Sonar Beacon; description: Acoustic mapping of the ocean floor">
     </a-entity>
-
-    <a-cylinder
-      position="-3.464 0.2 -2"
-      radius="0.75"
-      height="0.4"
-      color="#174b60">
-    </a-cylinder>
+    <a-cylinder position="-3.464 0.2 -2" radius="0.75"
+      height="0.4" color="#174b60"></a-cylinder>
 
   </a-scene>
 </body>
