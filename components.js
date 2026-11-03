@@ -24,13 +24,18 @@ AFRAME.registerComponent("x2322-motion", {
   },
 
   init: function () {
+    // Save the original transform.
     this.basePosition = this.el.object3D.position.clone();
     this.baseScale = this.el.object3D.scale.clone();
 
+    // Time and motion state.
     this.elapsed = 0;
-    this.lastTime = null;
     this.phaseOffset = this.data.phase;
     this.running = true;
+
+    // Smooth amplitude changes.
+    this.currentAmplitude = this.data.amplitude;
+    this.targetAmplitude = this.data.amplitude;
 
     this.logLifecycle("init");
   },
@@ -38,58 +43,93 @@ AFRAME.registerComponent("x2322-motion", {
   update: function (oldData) {
     this.logLifecycle("update");
 
+    // Do not change the visible amplitude immediately.
+    // tick() will smoothly approach the new value.
+    this.targetAmplitude = this.data.amplitude;
+
+    // A-Frame also calls update() during initialization.
     if (!oldData || Object.keys(oldData).length === 0) {
       return;
     }
 
-    // Preserve the current oscillation angle when the
-    // period or phase is changed at runtime.
+    // Keep the current angle when the period changes.
     const oldPeriod = Math.max(0.001, oldData.period);
+    const newPeriod = Math.max(0.001, this.data.period);
+
     const oldAngle =
       (2 * Math.PI * this.elapsed) / oldPeriod +
       this.phaseOffset;
-
-    const newPeriod = Math.max(0.001, this.data.period);
 
     this.phaseOffset =
       oldAngle -
       (2 * Math.PI * this.elapsed) / newPeriod;
 
+    // Apply an explicitly requested phase change.
     if (oldData.phase !== this.data.phase) {
       this.phaseOffset += this.data.phase - oldData.phase;
+    }
+
+    // Reset the previous motion type's transform.
+    if (oldData.type !== this.data.type) {
+      this.el.object3D.position.copy(this.basePosition);
+      this.el.object3D.scale.copy(this.baseScale);
     }
   },
 
   tick: function (time, timeDelta) {
-    if (!this.running) return;
-
-    // A-Frame supplies frame time in milliseconds.
-    // Store elapsed time in seconds.
-    if (Number.isFinite(timeDelta)) {
-      this.elapsed += Math.max(0, timeDelta) / 1000;
+    if (!this.running) {
+      return;
     }
 
+    // Convert milliseconds into seconds.
+    const deltaMs = Number.isFinite(timeDelta)
+      ? Math.max(0, timeDelta)
+      : 0;
+
+    this.elapsed += deltaMs / 1000;
+
+    // Calculate the oscillation.
     const period = Math.max(0.001, this.data.period);
+
     const angle =
       (2 * Math.PI * this.elapsed) / period +
       this.phaseOffset;
 
     const wave = Math.sin(angle);
-    const amount = this.data.amplitude * wave;
 
+    // Smooth amplitude transitions (about 250 ms).
+    const smoothing = 1 - Math.exp(-deltaMs / 250);
+
+    this.currentAmplitude +=
+      (this.targetAmplitude - this.currentAmplitude) *
+      smoothing;
+
+    const amount = this.currentAmplitude * wave;
+
+    // Pulse: change scale around the original size.
     if (this.data.type === "pulse") {
       const factor = Math.max(0.05, 1 + amount);
-      this.el.object3D.scale.copy(this.baseScale)
+
+      this.el.object3D.scale
+        .copy(this.baseScale)
         .multiplyScalar(factor);
-    } else if (this.data.type === "bob") {
+    }
+
+    // Bob: move vertically around the original position.
+    else if (this.data.type === "bob") {
       this.el.object3D.position.copy(this.basePosition);
       this.el.object3D.position.y += amount;
-    } else if (this.data.type === "orbit") {
+    }
+
+    // Orbit: move in a small circle.
+    else if (this.data.type === "orbit") {
       this.el.object3D.position.copy(this.basePosition);
+
       this.el.object3D.position.x +=
-        this.data.amplitude * Math.cos(angle);
+        this.currentAmplitude * Math.cos(angle);
+
       this.el.object3D.position.z +=
-        this.data.amplitude * Math.sin(angle);
+        this.currentAmplitude * Math.sin(angle);
     }
   },
 
@@ -104,6 +144,7 @@ AFRAME.registerComponent("x2322-motion", {
   },
 
   remove: function () {
+    // Restore the original transform.
     this.el.object3D.position.copy(this.basePosition);
     this.el.object3D.scale.copy(this.baseScale);
 
