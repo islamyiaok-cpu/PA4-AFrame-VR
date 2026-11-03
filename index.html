@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,180 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PA4 - Underwater Research Base - 242322</title>
   <link rel="icon" href="data:,">
-
   <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
   <script src="components.js"></script>
 </head>
-
 <body>
-  <a-scene
-    background="color: #062535"
-    fog="type: exponential; color: #062535; density: 0.025">
+  <a-scene x2322-gallery background="color: #062535"
+           fog="type: exponential; color: #062535; density: 0.025">
+    <a-assets timeout="15000">
+      <img id="sand-texture" src="textures/seafloor.png" alt="Original sandy seabed texture">
+      <img id="metal-texture" src="textures/metal.png" alt="Original submarine metal texture">
+      <img id="coral-texture" src="textures/coral.png" alt="Original coral texture">
+    </a-assets>
 
-    <!-- Camera rig -->
     <a-entity id="rig" position="0 0 0" wasd-controls>
-      <a-entity
-        id="camera"
-        camera
-        position="0 1.6 0"
-        look-controls
-        cursor="rayOrigin: mouse"
-        raycaster="objects: .exhibit">
+      <a-entity id="camera" camera position="0 1.6 0" look-controls
+                cursor="rayOrigin: mouse" raycaster="objects: .exhibit">
+        <a-entity id="gallery-hud" position="0 -0.65 -1.6" scale="0.45 0.45 0.45">
+          <a-plane width="4.5" height="0.65" color="#102d3b" opacity="0.93"></a-plane>
+          <a-text id="gallery-status" value="Selected: None (0 of 6)"
+                  position="-2.05 0.10 0.02" width="4.1" color="#ffffff"></a-text>
+          <a-text value="M: Pause/Resume  |  X: Remove selected"
+                  position="-2.05 -0.17 0.02" width="3.2" color="#a8e8f3"></a-text>
+        </a-entity>
       </a-entity>
-
-      <!-- VR controllers -->
-      <a-entity
-        id="left-hand"
-        laser-controls="hand: left"
-        raycaster="objects: .exhibit">
-      </a-entity>
-
-      <a-entity
-        id="right-hand"
-        laser-controls="hand: right"
-        raycaster="objects: .exhibit">
-      </a-entity>
+      <a-entity id="left-hand" laser-controls="hand: left" raycaster="objects: .exhibit"></a-entity>
+      <a-entity id="right-hand" laser-controls="hand: right" raycaster="objects: .exhibit"></a-entity>
     </a-entity>
 
-    <!-- Underwater environment -->
     <a-sky color="#07394b"></a-sky>
+    <a-plane id="ground" position="0 -0.05 0" rotation="-90 0 0"
+             width="30" height="30" material="color: #d4e4e5; roughness: 0.95"
+             x2322-texture="src: #sand-texture; repeat: 12 12; anisotropy: 8"></a-plane>
+    <a-entity light="type: ambient; color: #9bd6e4; intensity: 0.65"></a-entity>
+    <a-entity light="type: directional; color: #d3f5ff; intensity: 1.1"
+              position="-3 8 4"></a-entity>
+    <a-cylinder position="0 0.08 0" radius="1.3" height="0.16" color="#235768"></a-cylinder>
 
-    <a-plane
-      id="ground"
-      position="0 -0.05 0"
-      rotation="-90 0 0"
-      width="30"
-      height="30"
-      color="#426d72">
-    </a-plane>
-
-    <!-- Lights -->
-    <a-entity
-      light="type: ambient; color: #9bd6e4; intensity: 0.65">
-    </a-entity>
-
-    <a-entity
-      light="type: directional; color: #d3f5ff; intensity: 1.1"
-      position="-3 8 4">
-    </a-entity>
-
-    <!-- Center platform -->
-    <a-cylinder
-      position="0 0.08 0"
-      radius="1.3"
-      height="0.16"
-      color="#235768">
-    </a-cylinder>
-
-    <!-- Information board -->
     <a-entity position="0 3.5 -2.5">
-      <a-plane
-        width="3.8"
-        height="1.1"
-        color="#102d3b"
-        opacity="0.95">
-      </a-plane>
-
-      <a-text
-        value="PA4 - UNDERWATER RESEARCH BASE"
-        position="-1.75 0.27 0.02"
-        width="3.4"
-        color="#ffffff">
-      </a-text>
-
-      <a-text
-        value="Student ID: 242322"
-        position="-1.75 0 0.02"
-        width="3.2"
-        color="#a8e8f3">
-      </a-text>
-
-      <a-text
-        value="Pulse | Point-and-click | Ring"
-        position="-1.75 -0.27 0.02"
-        width="3.2"
-        color="#a8e8f3">
-      </a-text>
+      <a-plane width="3.8" height="1.1" color="#102d3b" opacity="0.95"></a-plane>
+      <a-text value="PA4 - UNDERWATER RESEARCH BASE" position="-1.75 0.27 0.02"
+              width="3.4" color="#ffffff"></a-text>
+      <a-text value="Student ID: 242322" position="-1.75 0 0.02"
+              width="3.2" color="#a8e8f3"></a-text>
+      <a-text value="Pulse | Point-and-click | Ring" position="-1.75 -0.27 0.02"
+              width="3.2" color="#a8e8f3"></a-text>
     </a-entity>
 
-    <!-- EXHIBIT 1 -->
-    <a-entity
-      id="exhibit-1"
-      class="exhibit"
-      position="0 1.3 -4"
-      geometry="primitive: icosahedron; radius: 0.55"
-      material="color: #20e1e8; metalness: 0.25; roughness: 0.35"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 0"
-      x2322-exhibit="name: Ocean Core; description: Energy source for the underwater research base">
-    </a-entity>
-    <a-cylinder position="0 0.2 -4" radius="0.75"
-      height="0.4" color="#174b60"></a-cylinder>
+    <a-entity id="exhibit-1" class="exhibit" position="0 1.3 -4"
+              geometry="primitive: icosahedron; radius: 0.55"
+              material="color: #20e1e8; metalness: 0.25; roughness: 0.35"
+              x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 0"
+              x2322-exhibit="name: Ocean Core; description: Energy source for the underwater research base"></a-entity>
+    <a-cylinder position="0 0.2 -4" radius="0.75" height="0.4" color="#174b60"></a-cylinder>
 
-    <!-- EXHIBIT 2 -->
-    <a-entity
-      id="exhibit-2"
-      class="exhibit"
-      position="3.464 1.3 -2"
-      geometry="primitive: octahedron; radius: 0.55"
-      material="color: #ffbb55; metalness: 0.3; roughness: 0.4"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 1.047"
-      x2322-exhibit="name: Deep-Sea Sensor; description: Measures underwater pressure and temperature">
-    </a-entity>
-    <a-cylinder position="3.464 0.2 -2" radius="0.75"
-      height="0.4" color="#174b60"></a-cylinder>
+    <a-entity id="exhibit-2" class="exhibit" position="3.464 1.3 -2"
+              geometry="primitive: octahedron; radius: 0.55"
+              material="color: #ffbb55; metalness: 0.3; roughness: 0.4"
+              x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 1.047"
+              x2322-exhibit="name: Deep-Sea Sensor; description: Measures underwater pressure and temperature"></a-entity>
+    <a-cylinder position="3.464 0.2 -2" radius="0.75" height="0.4" color="#174b60"></a-cylinder>
 
-    <!-- EXHIBIT 3 -->
-    <a-entity
-      id="exhibit-3"
-      class="exhibit"
-      position="3.464 1.3 2"
-      geometry="primitive: dodecahedron; radius: 0.55"
-      material="color: #ff6f91; metalness: 0.1; roughness: 0.65"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 2.094"
-      x2322-exhibit="name: Coral Sample; description: Marine biodiversity research specimen">
-    </a-entity>
-    <a-cylinder position="3.464 0.2 2" radius="0.75"
-      height="0.4" color="#174b60"></a-cylinder>
+    <a-entity id="exhibit-3" class="exhibit" position="3.464 1.3 2"
+              geometry="primitive: dodecahedron; radius: 0.55"
+              material="color: #ffffff; metalness: 0.1; roughness: 0.65"
+              x2322-texture="src: #coral-texture; repeat: 2 2; anisotropy: 8"
+              x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 2.094"
+              x2322-exhibit="name: Coral Sample; description: Marine biodiversity research specimen"></a-entity>
+    <a-cylinder position="3.464 0.2 2" radius="0.75" height="0.4" color="#174b60"></a-cylinder>
 
-    <!-- EXHIBIT 4 -->
-    <a-entity
-      id="exhibit-4"
-      class="exhibit"
-      position="0 1.3 4"
-      geometry="primitive: box; width: 0.9; height: 0.55; depth: 0.65"
-      material="color: #8faaff; metalness: 0.45; roughness: 0.3"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 3.142"
-      x2322-exhibit="name: Research Drone; description: Autonomous vehicle for seabed exploration">
-    </a-entity>
-    <a-cylinder position="0 0.2 4" radius="0.75"
-      height="0.4" color="#174b60"></a-cylinder>
+    <a-entity id="exhibit-4" class="exhibit" position="0 1.3 4"
+              geometry="primitive: box; width: 0.9; height: 0.55; depth: 0.65"
+              material="color: #ffffff; metalness: 0.45; roughness: 0.3"
+              x2322-texture="src: #metal-texture; repeat: 2 2; anisotropy: 8"
+              x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 3.142"
+              x2322-exhibit="name: Research Drone; description: Autonomous vehicle for seabed exploration"></a-entity>
+    <a-cylinder position="0 0.2 4" radius="0.75" height="0.4" color="#174b60"></a-cylinder>
 
-    <!-- EXHIBIT 5 -->
-    <a-entity
-      id="exhibit-5"
-      class="exhibit"
-      position="-3.464 1.3 2"
-      geometry="primitive: cylinder; radius: 0.42; height: 0.9"
-      material="color: #9bea78; metalness: 0.25; roughness: 0.4"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 4.189"
-      x2322-exhibit="name: Water Analyzer; description: Tests water quality and chemical composition">
-    </a-entity>
-    <a-cylinder position="-3.464 0.2 2" radius="0.75"
-      height="0.4" color="#174b60"></a-cylinder>
+    <a-entity id="exhibit-5" class="exhibit" position="-3.464 1.3 2"
+              geometry="primitive: cylinder; radius: 0.42; height: 0.9"
+              material="color: #9bea78; metalness: 0.25; roughness: 0.4"
+              x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 4.189"
+              x2322-exhibit="name: Water Analyzer; description: Tests water quality and chemical composition"></a-entity>
+    <a-cylinder position="-3.464 0.2 2" radius="0.75" height="0.4" color="#174b60"></a-cylinder>
 
-    <!-- EXHIBIT 6 -->
-    <a-entity
-      id="exhibit-6"
-      class="exhibit"
-      position="-3.464 1.3 -2"
-      geometry="primitive: cone; radiusBottom: 0.5; radiusTop: 0.1; height: 1"
-      material="color: #d4a1ff; metalness: 0.3; roughness: 0.45"
-      x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 5.236"
-      x2322-exhibit="name: Sonar Beacon; description: Acoustic mapping of the ocean floor">
-    </a-entity>
-    <a-cylinder position="-3.464 0.2 -2" radius="0.75"
-      height="0.4" color="#174b60"></a-cylinder>
-
+    <a-entity id="exhibit-6" class="exhibit" position="-3.464 1.3 -2"
+              geometry="primitive: cone; radiusBottom: 0.5; radiusTop: 0.1; height: 1"
+              material="color: #d4a1ff; metalness: 0.3; roughness: 0.45"
+              x2322-motion="type: pulse; amplitude: 0.15; period: 3; phase: 5.236"
+              x2322-exhibit="name: Sonar Beacon; description: Acoustic mapping of the ocean floor"></a-entity>
+    <a-cylinder position="-3.464 0.2 -2" radius="0.75" height="0.4" color="#174b60"></a-cylinder>
   </a-scene>
 </body>
 </html>
